@@ -1,116 +1,53 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>$ZOMBIDEX • Image Doctor</title>
-<style>
-  :root { --gold:#ffd54a; --ink:#eee; --bg:#111; }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-  .hero{
-    min-height:52vh;display:grid;place-items:center;text-align:center;padding:2rem;
-    background: linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.55)),
-                linear-gradient(135deg,#0f0f0f,#212121); /* fallback */
-    border-bottom:1px solid #222
-  }
-  h1{margin:.3rem 0;font-size:clamp(2rem,4vw,3rem);color:var(--gold)}
-  h2{margin:.2rem 0;font-weight:600;opacity:.95}
-  main{max-width:900px;margin:0 auto;padding:1.5rem}
-  .btn{display:inline-block;margin:.4rem;padding:.8rem 1.1rem;background:var(--gold);color:#000;font-weight:700;border-radius:12px;text-decoration:none;border:1px solid #000}
-  .tests{margin:1rem auto;max-width:900px;border:1px solid #222;border-radius:12px;padding:1rem;background:#0e0e0e}
-  .row{display:flex;justify-content:space-between;gap:.75rem;padding:.4rem .6rem;border-bottom:1px dashed #222}
-  .row:last-child{border-bottom:none}
-  .url{overflow-wrap:anywhere;opacity:.9}
-  .ok{color:#7CFC00;font-weight:700}
-  .bad{color:#ff6b6b;font-weight:700}
-  footer{border-top:1px solid #222;color:#aaa;padding:1rem;text-align:center}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>$ZOMBIDEX • Official Mini-App Hub</title>
+  <style>
+    :root { --gold:#ffd54a; --ink:#eee; --bg:#0c0c0c; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    .hero{
+      min-height:52vh; display:grid; place-items:center; text-align:center; padding:2rem;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.55)),
+        url("zombidex-horde.png?v=21") center/cover no-repeat;
+      border-bottom:1px solid #222;
+    }
+    h1{margin:.3rem 0; font-size:clamp(2rem,4vw,3rem); color:var(--gold); text-shadow:0 4px 18px rgba(0,0,0,.55)}
+    h2{margin:.2rem 0; font-weight:600; opacity:.95}
+    main{max-width:840px; margin:0 auto; padding:2rem 1rem; line-height:1.65; text-align:center}
+    .btn{
+      display:inline-block; margin:.5rem; padding:.9rem 1.2rem; text-decoration:none;
+      background:var(--gold); color:#000; font-weight:700; border-radius:12px; border:1px solid #000;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+    .btn:active{transform:translateY(1px)}
+    /* Hide auto-detection message and file list */
+    .auto-detect, [class*="auto-detect"], [id*="auto-detect"], [class*="banner"], [id*="banner"] {
+      display: none !important;
+    }
+    footer{border-top:1px solid #222; color:#aaa; padding:1rem; text-align:center; font-size:.95rem}
+  </style>
 </head>
 <body>
-  <header class="hero" id="hero">
+  <header class="hero">
     <div>
-      <div style="letter-spacing:.06em;font-weight:800;color:var(--gold);font-size:.95rem;margin-bottom:.35rem">$ZOMBIDEX</div>
+      <div style="letter-spacing:.06em;font-weight:800;color:#ffd54a;font-size:.95rem;margin-bottom:.35rem">$ZOMBIDEX</div>
       <h1>The Crypto-Horde is Coming!</h1>
       <h2>Fueled by Brains &amp; Blockchain</h2>
     </div>
   </header>
 
   <main>
-    <p>This page will auto-detect your banner image and tell you exactly which URL works. Upload your poster under <code>images/</code> (recommended) or at repo root, then refresh.</p>
-
-    <div class="tests" id="results"><div class="row"><div class="url">Testing…</div></div></div>
-
+    <p>Welcome to the official <strong>$ZOMBIDEX Mini-App Hub</strong> — a meme token with bite, built on Solana.</p>
     <p>
       <a class="btn" href="https://github.com/ZOMBIDEX/zombidex-miniapp" target="_blank" rel="noopener">View GitHub Repo</a>
-      <a class="btn" href="mailto:ZOMBIcoin@proton.me?subject=THE%20UNDEAD">Contact the Team</a>
+      <a class="btn" href="mailto:ZOMBIcoin@proton.me?subject=THE%20UNDEAD" rel="noopener">Contact the Team</a>
     </p>
   </main>
 
-  <footer>© 2025 $ZOMBIDEX • GitHub Pages Image Doctor</footer>
-
-<script>
-(async () => {
-  // Try the most common paths/extensions
-  const base = location.origin + location.pathname.replace(/\/$/, '') + '/';
-  const candidates = [
-    'images/zombidex-horde.png',
-    'images/zombidex-horde.PNG',
-    'images/zombidex-horde.jpg',
-    'images/zombidex-horde.JPG',
-    'zombidex-horde.png',
-    'zombidex-horde.PNG',
-    'zombidex-horde.jpg',
-    'zombidex-horde.JPG'
-  ];
-  const resultsEl = document.getElementById('results');
-  resultsEl.innerHTML = '';
-
-  const testURL = (url) => new Promise((resolve) => {
-    const img = new Image();
-    const timer = setTimeout(() => resolve({url, ok:false, reason:'timeout'}), 7000);
-    img.onload = () => { clearTimeout(timer); resolve({url, ok:true}); };
-    img.onerror = () => { clearTimeout(timer); resolve({url, ok:false, reason:'error'}); };
-    img.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now();
-  });
-
-  // Run tests sequentially (clearer logs)
-  let firstGood = null;
-  for (const rel of candidates) {
-    const url = base + rel;
-    // HEAD check to spot Git LFS pointer (often returns 200 but image fails); do image test instead
-    const res = await testURL(url);
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.innerHTML = `<div class="url">${rel}</div><div>${res.ok ? '<span class="ok">✅ OK</span>' : '<span class="bad">❌</span>'}</div>`;
-    resultsEl.appendChild(row);
-    if (res.ok && !firstGood) firstGood = url;
-  }
-
-  // If nothing worked, show probable causes
-  if (!firstGood) {
-    const tip = document.createElement('div');
-    tip.style.padding = '0.8rem 0.6rem';
-    tip.innerHTML = `
-      <div><strong>No image loaded.</strong> Likely causes:</div>
-      <ul>
-        <li>Filename or extension mismatch (e.g., <code>.PNG</code> vs <code>.png</code>).</li>
-        <li>Image uploaded to the repo root instead of <code>images/</code>.</li>
-        <li>Uploaded via <strong>Git LFS</strong> (Pages can’t serve LFS images). Re-upload as a normal file.</li>
-      </ul>
-      <div>Fix: Put your poster at <code>images/zombidex-horde.png</code> (all lowercase), then refresh this page.</div>
-    `;
-    resultsEl.appendChild(tip);
-    return;
-  }
-
-  // Use the first good image as the hero background
-  const hero = document.getElementById('hero');
-  hero.style.backgroundImage =
-    `linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.55)), url('${firstGood}')`;
-  hero.style.backgroundSize = 'cover';
-  hero.style.backgroundPosition = 'center';
-})();
-</script>
+  <footer>© 2025 $ZOMBIDEX • Launching on Solana DEX</footer>
 </body>
 </html>
