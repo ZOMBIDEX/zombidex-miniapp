@@ -1,53 +1,78 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>$ZOMBIDEX • Official Mini-App Hub</title>
-  <style>
-    :root { --gold:#ffd54a; --ink:#eee; --bg:#0c0c0c; }
-    * { box-sizing: border-box; }
-    html, body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, Helvetica, sans-serif; }
-    .hero{
-      min-height:52vh; display:grid; place-items:center; text-align:center; padding:2rem;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.55)),
-        url("zombidex-horde.png?v=21") center/cover no-repeat;
-      border-bottom:1px solid #222;
-    }
-    h1{margin:.3rem 0; font-size:clamp(2rem,4vw,3rem); color:var(--gold); text-shadow:0 4px 18px rgba(0,0,0,.55)}
-    h2{margin:.2rem 0; font-weight:600; opacity:.95}
-    main{max-width:840px; margin:0 auto; padding:2rem 1rem; line-height:1.65; text-align:center}
-    .btn{
-      display:inline-block; margin:.5rem; padding:.9rem 1.2rem; text-decoration:none;
-      background:var(--gold); color:#000; font-weight:700; border-radius:12px; border:1px solid #000;
-      box-shadow:0 8px 24px rgba(0,0,0,.25);
-    }
-    .btn:active{transform:translateY(1px)}
-    /* Hide auto-detection message and file list */
-    .auto-detect, [class*="auto-detect"], [id*="auto-detect"], [class*="banner"], [id*="banner"] {
-      display: none !important;
-    }
-    footer{border-top:1px solid #222; color:#aaa; padding:1rem; text-align:center; font-size:.95rem}
-  </style>
-</head>
-<body>
-  <header class="hero">
-    <div>
-      <div style="letter-spacing:.06em;font-weight:800;color:#ffd54a;font-size:.95rem;margin-bottom:.35rem">$ZOMBIDEX</div>
-      <h1>The Crypto-Horde is Coming!</h1>
-      <h2>Fueled by Brains &amp; Blockchain</h2>
-    </div>
-  </header>
+<div>
+<h1>ZOMBIDEX <span id="hello"></span></h1>
+<p>Zero‑friction starter for the Telegram <strong>Mini App</strong> + GitHub Pages site.</p>
+</div>
+</div>
+<div class="hero">
+<div class="circle">Z</div>
+<div>
+<p>Tap the green button below inside Telegram to launch the Mini App. If you're viewing this in a normal browser, use the link button to open the bot in Telegram.</p>
+<div class="row">
+<button id="launch" class="accent">Launch inside Telegram</button>
+<a class="btn" id="open-bot" href="#">Open bot in Telegram</a>
+</div>
+<div id="browser-note" class="note"></div>
+</div>
+</div>
+<div class="notice">No templates here. This page is clean and purpose‑built for ZOMBIDEX. Replace text and assets as you like.</div>
+</div>
+</div>
 
-  <main>
-    <p>Welcome to the official <strong>$ZOMBIDEX Mini-App Hub</strong> — a meme token with bite, built on Solana.</p>
-    <p>
-      <a class="btn" href="https://github.com/ZOMBIDEX/zombidex-miniapp" target="_blank" rel="noopener">View GitHub Repo</a>
-      <a class="btn" href="mailto:ZOMBIcoin@proton.me?subject=THE%20UNDEAD" rel="noopener">Contact the Team</a>
-    </p>
-  </main>
 
-  <footer>© 2025 $ZOMBIDEX • Launching on Solana DEX</footer>
+<script>
+(function () {
+const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+const inTelegram = !!tg && !!tg.initDataUnsafe;
+
+
+// TODO: set your bot username (must end with 'bot')
+const BOT_USERNAME = 'REPLACE_WITH_YOUR_BOT_USERNAME';
+const DIRECT_LINK = `https://t.me/${BOT_USERNAME}?startapp=home`;
+
+
+// Wire buttons
+const $launch = document.getElementById('launch');
+const $openBot = document.getElementById('open-bot');
+const $hello = document.getElementById('hello');
+const $note = document.getElementById('browser-note');
+
+
+$openBot.setAttribute('href', DIRECT_LINK);
+
+
+if (inTelegram) {
+// Apply Telegram theme colors if available
+const p = tg.themeParams || {};
+try {
+if (p.bg_color) document.documentElement.style.setProperty('--bg', p.bg_color);
+if (p.text_color) document.documentElement.style.setProperty('--text', p.text_color);
+if (p.hint_color) document.documentElement.style.setProperty('--muted', p.hint_color);
+if (p.secondary_bg_color) document.documentElement.style.setProperty('--card', p.secondary_bg_color);
+if (p.section_separator_color) document.documentElement.style.setProperty('--border', p.section_separator_color);
+} catch (_) {}
+
+
+tg.ready();
+tg.expand();
+const first = tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.first_name;
+if (first) $hello.textContent = ` welcomes you, ${first}!`;
+
+
+$launch.addEventListener('click', function () {
+// You can use Telegram APIs here, e.g., openLink/openTelegramLink
+tg.HapticFeedback && tg.HapticFeedback.impactOccurred('medium');
+// Do something in‑app — for now, just change button text
+$launch.textContent = 'Launched ✓';
+});
+} else {
+// Not in Telegram: show a friendly hint and make the green button open the bot link
+$note.textContent = 'Tip: You are in a regular browser. Click "Open bot in Telegram" to test the Mini App.';
+$launch.addEventListener('click', function () {
+window.location.href = DIRECT_LINK;
+});
+}
+})();
+</script>
 </body>
 </html>
