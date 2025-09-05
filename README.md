@@ -1,0 +1,1 @@
+# zombidex-miniapp
