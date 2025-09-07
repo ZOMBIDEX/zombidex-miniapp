@@ -9,67 +9,44 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-color: black; /* Changed to black background */
+            background-color: black;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: flex-start; /* Align content from the left */
         }
         .sidebar {
             width: 15%;
-            background: black; /* Ensure sidebar matches background */
-            padding: 20px;
+            background: black;
+            padding: 20px 10px;
             color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center buttons vertically */
+            align-items: center; /* Center buttons horizontally within sidebar */
+            height: 100%; /* Full height to enable centering */
         }
         .sidebar button {
             display: block;
             width: 100%;
             padding: 10px;
-            margin: 5px 0;
-            background-color: black; /* Black buttons */
-            border: 2px solid white; /* Optional: Add border for visibility */
-            color: white; /* White lettering */
+            margin: 10px 0;
+            background-color: black;
+            border: 2px solid white;
+            color: white;
             cursor: pointer;
             font-size: 16px;
             transition: border-color 0.3s;
         }
         .sidebar button:hover {
-            border-color: #ccc; /* Slight hover effect */
+            border-color: #ccc;
         }
         .main-content {
             flex-grow: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .chat-area {
-            flex-grow: 1;
-            background: rgba(0, 0, 0, 0.7); /* Darker overlay for contrast */
-            padding: 20px;
+            justify-content: center;
+            align-items: center;
             color: white;
-            overflow-y: auto;
-        }
-        .input-area {
-            padding: 10px;
-            background: black;
-        }
-        .input-area input {
-            width: 70%;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #333; /* Dark input field */
-            color: white;
-            border: 1px solid white;
-        }
-        .input-area button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: black; /* Black button */
-            color: white; /* White lettering */
-            border: 2px solid white;
-            cursor: pointer;
-        }
-        .input-area button:hover {
-            border-color: #ccc; /* Slight hover effect */
+            text-align: center;
         }
     </style>
 </head>
@@ -83,25 +60,8 @@
             <button>Playbook</button>
         </div>
         <div class="main-content">
-            <div class="chat-area">
-                <p>Welcome to ZOMBIDEX Chat! Enter commands below.</p>
-            </div>
-            <div class="input-area">
-                <input type="text" id="commandInput" placeholder="Enter command (e.g., /setkey, /linkgroup)">
-                <button onclick="processCommand()">Send</button>
-            </div>
+            <!-- Removed welcome message; can add other content here if needed -->
         </div>
     </div>
-    <script>
-        function processCommand() {
-            const input = document.getElementById('commandInput').value;
-            const chatArea = document.querySelector('.chat-area');
-            if (input) {
-                chatArea.innerHTML += `<p>You entered: ${input}</p>`;
-                document.getElementById('commandInput').value = '';
-                console.log(`Command processed: ${input}`);
-            }
-        }
-    </script>
 </body>
 </html>
