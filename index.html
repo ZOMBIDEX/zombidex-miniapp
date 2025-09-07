@@ -3,67 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZOMBIDEX App</title>
+    <title>ZOMBIDEX Telegram App</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-image: url('https://example.com/zombidex-bg.jpg'); /* Replace with your background image URL */
+            background-image: url('https://example.com/zombidex-bg.jpg'); /* Replace with your image */
             background-size: cover;
-            background-position: center;
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: space-between;
-        }
-        .button-group {
-            display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding: 20px;
+        }
+        .sidebar {
             width: 15%;
-        }
-        .button-group button {
-            background-color: #333;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
             color: white;
-            border: none;
-            padding: 15px;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 10px;
             margin: 5px 0;
+            background: #444;
+            border: none;
+            color: white;
             cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-            transition: background-color 0.3s;
         }
-        .button-group button:hover {
-            background-color: #555;
+        .sidebar button:hover {
+            background: #666;
         }
-        .content {
+        .main-content {
             flex-grow: 1;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .chat-area {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
             color: white;
-            text-shadow: 2px 2px 4px #000;
+            overflow-y: auto;
+        }
+        .input-area {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .input-area input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .input-area button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="button-group">
-        <button>Telegram</button>
-        <button>X</button>
-        <button>CA</button>
-        <button>Whitepaper</button>
-        <button>Playbook</button>
+    <div style="display: flex; height: 100%;">
+        <div class="sidebar">
+            <button>Telegram</button>
+            <button>X</button>
+            <button>CA</button>
+            <button>Whitepaper</button>
+            <button>Playbook</button>
+        </div>
+        <div class="main-content">
+            <div class="chat-area">
+                <p>Welcome to ZOMBIDEX Chat! Enter commands below.</p>
+            </div>
+            <div class="input-area">
+                <input type="text" id="commandInput" placeholder="Enter command (e.g., /setkey, /linkgroup)">
+                <button onclick="processCommand()">Send</button>
+            </div>
+        </div>
     </div>
-    <div class="content">
-        <h1>Welcome to ZOMBIDEX</h1>
-    </div>
-    <div class="button-group">
-        <button>Telegram</button>
-        <button>X</button>
-        <button>CA</button>
-        <button>Whitepaper</button>
-        <button>Playbook</button>
-    </div>
+    <script>
+        function processCommand() {
+            const input = document.getElementById('commandInput').value;
+            const chatArea = document.querySelector('.chat-area');
+            if (input) {
+                chatArea.innerHTML += `<p>You entered: ${input}</p>`;
+                document.getElementById('commandInput').value = '';
+                // Add your command logic here (e.g., API calls)
+                console.log(`Command processed: ${input}`);
+            }
+        }
+    </script>
 </body>
 </html>
