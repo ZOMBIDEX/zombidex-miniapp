@@ -9,15 +9,14 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-image: url('https://example.com/zombidex-bg.jpg'); /* Replace with your image */
-            background-size: cover;
+            background-color: black; /* Changed to black background */
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
         }
         .sidebar {
             width: 15%;
-            background: rgba(0, 0, 0, 0.7);
+            background: black; /* Ensure sidebar matches background */
             padding: 20px;
             color: white;
         }
@@ -26,13 +25,15 @@
             width: 100%;
             padding: 10px;
             margin: 5px 0;
-            background: #444;
-            border: none;
-            color: white;
+            background-color: black; /* Black buttons */
+            border: 2px solid white; /* Optional: Add border for visibility */
+            color: white; /* White lettering */
             cursor: pointer;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
         .sidebar button:hover {
-            background: #666;
+            border-color: #ccc; /* Slight hover effect */
         }
         .main-content {
             flex-grow: 1;
@@ -42,27 +43,33 @@
         }
         .chat-area {
             flex-grow: 1;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.7); /* Darker overlay for contrast */
             padding: 20px;
             color: white;
             overflow-y: auto;
         }
         .input-area {
             padding: 10px;
-            background: rgba(0, 0, 0, 0.7);
+            background: black;
         }
         .input-area input {
             width: 70%;
             padding: 10px;
             font-size: 16px;
+            background-color: #333; /* Dark input field */
+            color: white;
+            border: 1px solid white;
         }
         .input-area button {
             padding: 10px 20px;
             font-size: 16px;
-            background: #444;
-            color: white;
-            border: none;
+            background-color: black; /* Black button */
+            color: white; /* White lettering */
+            border: 2px solid white;
             cursor: pointer;
+        }
+        .input-area button:hover {
+            border-color: #ccc; /* Slight hover effect */
         }
     </style>
 </head>
@@ -92,7 +99,6 @@
             if (input) {
                 chatArea.innerHTML += `<p>You entered: ${input}</p>`;
                 document.getElementById('commandInput').value = '';
-                // Add your command logic here (e.g., API calls)
                 console.log(`Command processed: ${input}`);
             }
         }
